@@ -1,4 +1,5 @@
 $(document).ready(function () {
+   
     $("#boton").on("click", function () {
         var pokemonName = $("#txt-buscar").val();
         if (!pokemonName) {
@@ -39,7 +40,7 @@ $(document).ready(function () {
                  <div class="blue-box">
                     <p>Movimientos:${movimientos} </p>
                  </div>
-            `);
+                `);
             },
             error: function (xhr, status, error) {
                 if (xhr.status === 404) {
@@ -51,3 +52,4 @@ $(document).ready(function () {
         });
     });
 });
+
