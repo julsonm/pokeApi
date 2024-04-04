@@ -1,4 +1,38 @@
 $(document).ready(function () {
+    const botonaActivarVoz = document.getElementById("activar-voz");
+
+    const reconocervoz = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!reconocervoz) {
+        console.error("El navegador no es compatible con la API de reconocimiento de voz.");
+    } else {
+        const reconocimiento = new reconocervoz();
+        reconocimiento.lang = 'es-ES';
+
+        reconocimiento.onstart = function () {
+            console.log("El micrófono está activado");
+        }
+
+        reconocimiento.onresult = function (event) {
+            const current = event.resultIndex;
+            const transcripcion = event.results[current][0].transcript;
+            $("#txt-buscar").val(transcripcion);
+            buscarPokemon(transcripcion);
+        }
+
+        botonaActivarVoz.addEventListener('click', () => {
+            reconocimiento.start();
+        });
+
+        reconocimiento.onend = function () {
+            const transcripcion = $("#txt-buscar").val();
+            if (transcripcion.trim() !== '') {
+                buscarPokemon(transcripcion);
+            }
+        }
+      
+    }
+
 
     $("#boton").on("click", function () {
         var pokemonName = $("#txt-buscar").val();
@@ -50,45 +84,6 @@ $(document).ready(function () {
                 }
             }
         });
-    });
-   var artyom;
-   
-    $("#activar-voz").on("click", function () {
-        var artyom = new Artyom();
-
-        artyom.addCommands({
-            indexes: ["Hola", "adios", "comando"],
-            action: function (i) {
-                if (i == 0) {
-                    artyom.say("saludo");
-                } else if (i == 1) {
-                    artyom.say("chao");
-                } else if (i == 2) {
-                    console.log("recibido");
-                }
-            }
-        });
-
-        artyom.initialize({
-            lang: "es-ES",
-            debug: true,
-            listen: true,
-            continuous: true,
-            speed: 0.9,
-            mode: "normal"
-        });
-
-        // Agregar el evento para el texto reconocido
-        artyom.redirectRecognizedTextOutput(function (recognized, isFinal) {
-            if (isFinal) {
-                console.log("Texto final reconocido: " + recognized);
-            } else {
-                console.log(recognized);
-            }
-        });
-
-        // Informar al usuario que Artyom está listo
-        artyom.say("Artyom está listo para escuchar.");
-    });
+    });    
 });
 

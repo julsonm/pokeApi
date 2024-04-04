@@ -18,7 +18,7 @@ body {
 }
 
 .btn {
-    background-color: rgb(32, 207, 242);
+    background-color: rgb(104, 177, 237);
     border: none;
     color: #ffffff;
     padding: 10px 20px;
@@ -32,7 +32,7 @@ body {
 
 .card-container {
     display: flex;
-    border: 1px solid #4cc7f4;
+    border: 1px solid #44d0ff;
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 0 10px rgba(237, 35, 35, 0.1);
@@ -44,7 +44,7 @@ body {
     padding: 20px;
 }
 .blue-box {
-background-color: #3498db; 
+background-color:#3498db; 
 padding: 10px;
 margin-bottom: 10px; 
 border-radius: 5px;
