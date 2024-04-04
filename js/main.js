@@ -1,5 +1,5 @@
 $(document).ready(function () {
-   
+
     $("#boton").on("click", function () {
         var pokemonName = $("#txt-buscar").val();
         if (!pokemonName) {
@@ -21,9 +21,9 @@ $(document).ready(function () {
                 var tipo = data.types.map(function (tipo) {
                     return tipo.type.name;
                 }).join(', ');
-                var movimientos = data.moves.map(function(movimiento) {
+                var movimientos = data.moves.map(function (movimiento) {
                     return movimiento.move.name;
-                }).join(', ');        
+                }).join(', ');
                 $("#ficha_tecnica").html(`
                    <div class="blue-box">
                       <p>Nombre: ${data.name} </p>
@@ -50,6 +50,45 @@ $(document).ready(function () {
                 }
             }
         });
+    });
+   var artyom;
+   
+    $("#activar-voz").on("click", function () {
+        var artyom = new Artyom();
+
+        artyom.addCommands({
+            indexes: ["Hola", "adios", "comando"],
+            action: function (i) {
+                if (i == 0) {
+                    artyom.say("saludo");
+                } else if (i == 1) {
+                    artyom.say("chao");
+                } else if (i == 2) {
+                    console.log("recibido");
+                }
+            }
+        });
+
+        artyom.initialize({
+            lang: "es-ES",
+            debug: true,
+            listen: true,
+            continuous: true,
+            speed: 0.9,
+            mode: "normal"
+        });
+
+        // Agregar el evento para el texto reconocido
+        artyom.redirectRecognizedTextOutput(function (recognized, isFinal) {
+            if (isFinal) {
+                console.log("Texto final reconocido: " + recognized);
+            } else {
+                console.log(recognized);
+            }
+        });
+
+        // Informar al usuario que Artyom está listo
+        artyom.say("Artyom está listo para escuchar.");
     });
 });
 
